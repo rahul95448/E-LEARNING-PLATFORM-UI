@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Custom Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        /* Reset and Globals */ 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        :root {
+            --primary-color: #007bff; /* Blue */
+            --secondary-color: #28a745; /* Green */
+            --bg-light: #f4f7f9;
+            --bg-white: #ffffff;
+            --text-dark: #333;
+            --text-light: #fefefe;
+            --border-color: #e0e0e0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        section {
+            padding: 60px 5%;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-weight: 900;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            border: none;
+            text-decoration: none;
+        }
+
+        /* --- Header and Navigation --- */
+        .header {
+            background-color: var(--bg-white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .navbar a {
+            margin: 0 15px;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .navbar a:hover, .navbar a.active {
+            color: var(--primary-color);
+        }
+
+        .login-btn {
+            color: var(--primary-color);
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            margin-right: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            transform: translateY(-2px);
+        }
+
+        .signup-btn {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .signup-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            background: linear-gradient(90deg, var(--bg-white) 60%, var(--bg-light) 100%);
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            padding: 12px 20px;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background-color: #1e7e34;
+        }
+
+        /* --- Course Section --- */
+        .courses {
+            background-color: var(--bg-light);
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .course-card h3 {
+            padding: 15px 15px 5px;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .course-instructor {
+            padding: 0 15px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .course-meta {
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .course-meta i {
+            color: gold;
+            margin-right: 5px;
+        }
+
+        .course-price {
+            padding: 5px 15px 15px;
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+
+        .old-price {
+            font-size: 1rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 10px;
+            font-weight: 400;
+        }
+
+        .enroll-btn {
+            display: block;
+            width: 100%;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-white);
+            color: var(--primary-color);
+            padding: 12px 0;
+            border-radius: 0 0 8px 8px;
+            text-decoration: none;
+        }
+
+        .enroll-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            transform: none;
+        }
+
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--text-dark);
+            color: var(--text-light);
+            padding: 40px 5% 10px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--text-light);
+            min-width: 200px;
+        }
+
+        .footer-logo span {
+            color: var(--primary-color);
+        }
+
+        .footer-links h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-social a {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-social a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px solid #555;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+
+        /* --- Responsiveness (Media Queries) --- */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .search-box {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-wrap: wrap;
+            }
+
+            .navbar {
+                order: 2; 
+                flex-basis: 100%;
+                text-align: center;
+                margin-top: 10px;
+                border-top: 1px solid var(--border-color);
+                padding-top: 10px;
+            }
+
+            .nav-actions {
+                order: 1;
+            }
+
+            .navbar a {
+                margin: 0 10px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                justify-content: flex-start;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .footer-logo {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-box {
+                flex-direction: column;
+            }
+            .search-box button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="#" class="logo">E-Learn<span>Pro</span></a>
+        <nav class="navbar">
+            <a href="#home" class="active">Home</a>
+            <a href="#courses">Courses</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="nav-actions">
+            <a href="#" class="btn login-btn">Login</a>
+            <a href="#" class="btn signup-btn">Sign Up</a>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Master New Skills Online</h1>
+            <p>Access 1000+ courses taught by experts worldwide. Transform your career with in-demand skills today.</p>
+            <div class="search-box">
+                <input type="text" placeholder="What do you want to learn?">
+                <button class="btn search-btn"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.3Fzx0rN2YyxKXKHgbgykKwHaE8?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Online Learning Illustration">
+        </div>
+    </section>
+
+    <section class="courses" id="courses">
+        <h2 class="section-heading">Explore Popular Courses</h2>
+        <div class="course-grid">
+            
+            <div class="course-card">
+                <div class="course-badge">BEST SELLER</div>
+                <img src="https://hackr.io/blog/best-web-development-courses/thumbnail/large" alt="Web Development Course">
+                <h3>Full Stack Web Development</h3>
+                <p class="course-instructor">By Jane Doe</p>
+                <div class="course-meta">
+                    <span class="rating"><i class="fas fa-star"></i> 4.9</span>
+                    <span class="duration"><i class="fas fa-clock"></i> 40 Hrs</span>
+                </div>
+                <div class="course-price">
+                    <span class="new-price">$99</span>
+                    <span class="old-price">$199</span>
+                </div>
+                <a href="#" class="btn enroll-btn">Enroll Now</a>
+            </div>
+
+            <div class="course-card">
+                <div class="course-badge">NEW</div>
+                <img src="https://blog.pwskills.com/wp-content/uploads/2024/03/Best-Data-Science-Courses.jpg" alt="Data Science Course">
+                <h3>Python for Data Science</h3>
+                <p class="course-instructor">By John Smith</p>
+                <div class="course-meta">
+                    <span class="rating"><i class="fas fa-star"></i> 4.7</span>
+                    <span class="duration"><i class="fas fa-clock"></i> 25 Hrs</span>
+                </div>
+                <div class="course-price">
+                    <span class="new-price">$79</span>
+                </div>
+                <a href="#" class="btn enroll-btn">Enroll Now</a>
+            </div>
+
+            <div class="course-card">
+                <img src="https://static.vecteezy.com/system/resources/previews/001/058/368/original/ui-ux-design-concept-in-flat-style-vector.jpg" alt="UI/UX Design Course">
+                <h3>Modern UI/UX Design</h3>
+                <p class="course-instructor">By Sarah Lee</p>
+                <div class="course-meta">
+                    <span class="rating"><i class="fas fa-star"></i> 4.6</span>
+                    <span class="duration"><i class="fas fa-clock"></i> 30 Hrs</span>
+                </div>
+                <div class="course-price">
+                    <span class="new-price">$59</span>
+                    <span class="old-price">$129</span>
+                </div>
+                <a href="#" class="btn enroll-btn">Enroll Now</a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">E-Learn<span>Pro</span></div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Terms & Privacy</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 E-LearnPro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.navbar a');
+            const header = document.querySelector('.header');
+            
+            // Function to handle smooth scrolling and set active link
+            const handleScrollAndNav = (e) => {
+                if (e.target.hash && e.target.hash !== "#" && e.target.closest('.navbar')) {
+                    e.preventDefault();
+                    const targetSection = document.querySelector(e.target.hash);
+                    const headerHeight = header.offsetHeight;
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - headerHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            };
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', handleScrollAndNav);
+            });
+
+            // Highlight active link based on scroll position
+            window.addEventListener('scroll', () => {
+                let current = '';
+                const sections = document.querySelectorAll('section');
+                const headerHeight = header.offsetHeight;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    // Adjusted scroll threshold to account for the fixed header
+                    const scrollThreshold = sectionTop - headerHeight - 1; 
+
+                    if (window.scrollY >= scrollThreshold) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(a => {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href').substring(1) === current) {
+                        a.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
